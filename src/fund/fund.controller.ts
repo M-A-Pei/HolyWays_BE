@@ -2,14 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FundService } from './fund.service';
 import { CreateFundDto } from './dto/create-fund.dto';
 import { UpdateFundDto } from './dto/update-fund.dto';
+import { error } from 'console';
 
 @Controller('fund')
 export class FundController {
-  constructor(private readonly fundService: FundService) {}
+  constructor(private readonly fundService: FundService) { }
 
   @Post()
   create(@Body() createFundDto: CreateFundDto) {
-    return this.fundService.create(createFundDto);
+    createFundDto.goal = Number(createFundDto.goal);
+    return this.fundService.create(createFundDto, 1);
   }
 
   @Get()
@@ -20,15 +22,5 @@ export class FundController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.fundService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFundDto: UpdateFundDto) {
-    return this.fundService.update(+id, updateFundDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.fundService.remove(+id);
   }
 }
