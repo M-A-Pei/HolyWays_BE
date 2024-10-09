@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "phone" SET DEFAULT '0000000000';

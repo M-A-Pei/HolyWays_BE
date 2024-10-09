@@ -10,12 +10,16 @@ export class UsersService {
     return await this.prisma.users.create({ data: createUserDto });
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return this.prisma.users.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.prisma.users.findUnique({ where: { id } });
+  }
+
+  async findByEmail(email: string) {
+    return await this.prisma.users.findUnique({ where: { email } });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

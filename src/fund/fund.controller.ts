@@ -1,8 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { FundService } from './fund.service';
 import { CreateFundDto } from './dto/create-fund.dto';
-import { UpdateFundDto } from './dto/update-fund.dto';
-import { error } from 'console';
 
 @Controller('fund')
 export class FundController {
