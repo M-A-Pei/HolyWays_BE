@@ -13,8 +13,9 @@ export class AuthService {
             throw new Error("user doesnt exist")
         }
 
-        const isMatch = await bcrypt.compare(loginDto.password, checkIfUserExists.password)
+        console.log(loginDto)
 
+        const isMatch = await bcrypt.compare(loginDto.password, checkIfUserExists.password)
         if (!isMatch) {
             throw new Error("wrong password")
         }

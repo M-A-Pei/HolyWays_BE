@@ -19,6 +19,8 @@ export class AppModule implements NestModule {
       {
         path: '/users',
         method: RequestMethod.POST,
-      });
+      },
+      '/auth/me'
+    );
   }
 }

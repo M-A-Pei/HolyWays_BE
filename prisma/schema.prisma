@@ -28,7 +28,7 @@ model users {
   id            Int      @id @default(autoincrement())
   name          String
   email         String   @unique
-  phone         String   @unique @default("0000000000")
+  phone         String?   @unique
   password      String
 
   funds         funds[]
