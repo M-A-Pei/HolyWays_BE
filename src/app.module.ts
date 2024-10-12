@@ -13,7 +13,7 @@ import { authorization } from './common/middleware/authorization';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(authorization).forRoutes({
-      path: '/funds',
+      path: '/fund',
       method: RequestMethod.POST,
     },
       {

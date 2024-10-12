@@ -6,8 +6,9 @@ import { PrismaService } from 'src/lib/prisma.service';
 @Injectable()
 export class FundService {
   constructor(private prisma: PrismaService) { }
-  create(createFundDto: CreateFundDto, ownerId: number) {
-    return this.prisma.funds.create({
+
+  async create(createFundDto: CreateFundDto, ownerId: number) {
+    return await this.prisma.funds.create({
       data: {
         ...createFundDto,
         owner: {
@@ -21,6 +22,16 @@ export class FundService {
 
   findAll() {
     return this.prisma.funds.findMany();
+  }
+
+  findByUserEmail(email: string){
+    return this.prisma.funds.findMany({
+      where: {
+        owner: {
+          email: email
+        }
+      }
+    })
   }
 
   findOne(id: number) {
