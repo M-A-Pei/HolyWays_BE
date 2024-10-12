@@ -20,6 +20,7 @@ model funds {
   goal          Int
   currentFunds  Int       @default(0)
   owner         users     @relation(fields: [ownerId], references: [id])
+  image         String
   ownerId       Int
   donations     donations[]
 }
