@@ -5,8 +5,9 @@ import { FundModule } from './fund/fund.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { authorization } from './common/middleware/authorization';
+import { DonationModule } from './donation/donation.module';
 @Module({
-  imports: [FundModule, UsersModule, AuthModule],
+  imports: [FundModule, UsersModule, AuthModule, DonationModule],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -20,7 +21,11 @@ export class AppModule implements NestModule {
         path: '/users',
         method: RequestMethod.POST,
       },
-      '/auth/me'
+      '/auth/me',
+      {
+        path: '/donation/:fundId',
+        method: RequestMethod.POST
+      }
     );
   }
 }

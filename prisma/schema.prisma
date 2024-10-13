@@ -44,4 +44,5 @@ model donations {
   date          DateTime   @default(now())
   fund          funds      @relation(fields: [fundId], references: [id])
   fundId        Int
+  image         String
 }
