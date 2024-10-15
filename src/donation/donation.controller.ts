@@ -1,26 +1,31 @@
-import { Controller, Get, Post, Body, Param, Delete, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Res, Patch } from '@nestjs/common';
 import { DonationService } from './donation.service';
 import { Response } from 'express';
 
 @Controller('donation')
 export class DonationController {
-  constructor(private readonly donationService: DonationService) {}
+  constructor(private readonly donationService: DonationService) { }
 
   @Post("/:fundId")
-  async create(@Body() body:{amount: number, image: string}, @Res() res: Response, @Param() param: any) {
+  async create(@Body() body: { amount: number, image: string }, @Res() res: Response, @Param() param: any) {
     const userId = res.locals.user.id;
     const fundId = Number(param.fundId);
     res.json(await this.donationService.create(body.amount, body.image, userId, fundId))
   }
 
-  @Get('/byFund/:id')
-  byFund(@Param('id') id: string) {
-    return this.donationService.byFund(+id);
+  @Get('/byFund/:id/:confirmed')
+  byFund(@Param() params: any,) {
+    return this.donationService.byFund(+params.id, params.confirmed === 'true');
   }
 
   @Get('/byDonator/:email')
   byDonator(@Param('email') email: string) {
     return this.donationService.byDonator(email);
+  }
+
+  @Patch(':id')
+  approve(@Param('id') id: string) {
+    return this.donationService.approve(+id);
   }
 
   @Delete(':id')

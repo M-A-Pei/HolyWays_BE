@@ -45,4 +45,5 @@ model donations {
   fund          funds      @relation(fields: [fundId], references: [id])
   fundId        Int
   image         String
+  isConfirmed   Boolean   @default(false)
 }

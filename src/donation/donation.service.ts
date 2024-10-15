@@ -3,7 +3,7 @@ import { PrismaService } from 'src/lib/prisma.service';
 
 @Injectable()
 export class DonationService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
   async create(amount: number, image: string, userId: number, fundId: number) {
     return await this.prisma.donations.create({
       data: {
@@ -23,19 +23,64 @@ export class DonationService {
     });
   }
 
+  async approve(id: number) {
+    const donation = await this.byId(id)
 
-  async byFund(id: number) {
-    return await this.prisma.donations.findMany({ where: { fundId: id } });
+    await this.prisma.funds.update({
+      where: {
+        id: donation.fundId
+      },
+      data: {
+        currentFunds: {
+          increment: donation.amount
+        }
+      }
+    })
+
+    return await this.prisma.donations.update({
+      where: {
+        id
+      },
+      data: {
+        isConfirmed: true
+      }
+    })
+  }
+
+  async byId(id: number) {
+    return await this.prisma.donations.findUnique({
+      where: {
+        id
+      }
+    })
+  }
+
+
+  async byFund(id: number, confirmed: boolean) {
+    return await this.prisma.donations.findMany({
+      where: {
+        fundId: id,
+        isConfirmed: confirmed
+      },
+      include: {
+        fund: true,
+        donator: true,
+      }
+    });
   }
 
   async byDonator(email: string) {
-    return await this.prisma.donations.findMany({ 
-      where: { 
-        donator: 
-        { 
-          email 
-        } 
-      } 
+    return await this.prisma.donations.findMany({
+      where: {
+        donator:
+        {
+          email
+        }
+      },
+      include: {
+        fund: true,
+        donator: true,
+      }
     });
   }
 

@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { authorization } from './common/middleware/authorization';
 import { DonationModule } from './donation/donation.module';
+
 @Module({
   imports: [FundModule, UsersModule, AuthModule, DonationModule],
   controllers: [AppController],
@@ -13,10 +14,11 @@ import { DonationModule } from './donation/donation.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(authorization).forRoutes({
-      path: '/fund',
-      method: RequestMethod.POST,
-    },
+    consumer.apply(authorization).forRoutes(
+      {
+        path: '/fund',
+        method: RequestMethod.POST,
+      },
       {
         path: '/users',
         method: RequestMethod.POST,

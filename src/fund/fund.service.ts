@@ -24,7 +24,7 @@ export class FundService {
     return this.prisma.funds.findMany();
   }
 
-  findByUserEmail(email: string){
+  findByUserEmail(email: string) {
     return this.prisma.funds.findMany({
       where: {
         owner: {
@@ -38,6 +38,9 @@ export class FundService {
     return this.prisma.funds.findUnique({
       where: {
         id
+      },
+      include: {
+        owner: true
       }
     });
   }

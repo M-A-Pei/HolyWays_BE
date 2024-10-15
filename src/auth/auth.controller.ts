@@ -12,16 +12,25 @@ export class AuthController {
 
   @Post('login')
   login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+    try {
+      return this.authService.login(loginDto)
+    } catch (error) {
+      return error
+    }
   }
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
-    const originalPW = createUserDto.password
-    createUserDto.password = await bcrypt.hash(createUserDto.password, 10)
-    await this.usersService.create(createUserDto)
+    try {
+      const originalPW = createUserDto.password
+      createUserDto.password = await bcrypt.hash(createUserDto.password, 10)
+      await this.usersService.create(createUserDto)
 
-    return this.authService.login({ email: createUserDto.email, password: originalPW })
+      return this.authService.login({ email: createUserDto.email, password: originalPW })
+    } catch (error) {
+      return error
+    }
+
   }
 
   @Get('me')
