@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, Res, Patch, UseInterceptors
 import { DonationService } from './donation.service';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from 'src/lib/cloudinary.service';
+import { CloudinaryService } from 'lib/cloudinary.service';
 
 @Controller('donation')
 export class DonationController {

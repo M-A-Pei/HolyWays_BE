@@ -2,9 +2,9 @@ import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { LoginDto } from 'src/auth/dto/login.dto';
 import { Response, Request } from 'express';
 import * as bcrypt from 'bcrypt'
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {

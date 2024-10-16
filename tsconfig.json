@@ -9,7 +9,10 @@
     "target": "ES2021", // Modern target for serverless environments
     "sourceMap": true,
     "outDir": "./dist", // Keep build output in dist/
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*"]  // Keep the same path resolution as in your "src" directory
+    },
     "incremental": true,
     "skipLibCheck": true, // Skips checking library files for faster build
     "strictNullChecks": false, 
