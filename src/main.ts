@@ -1,11 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import 'src/cloudinary.config'
+import { ExpressAdapter } from '@nestjs/platform-express';
+import * as express from 'express';
+import 'src/cloudinary.config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const server = express();
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
   app.enableCors();
-  await app.listen(3000);
+  await app.init();  // Initializes the NestJS app but doesn't start listening
+
+  return server;  // Return the Express server instance
 }
-bootstrap();
+
+export const handler = bootstrap();

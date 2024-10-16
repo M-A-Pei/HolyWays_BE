@@ -25,6 +25,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.20.0",
+    "@vercel/node": "^3.2.23",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.3",
     "jsonwebtoken": "^9.0.2",
