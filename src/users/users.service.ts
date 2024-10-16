@@ -7,6 +7,11 @@ import { PrismaService } from 'src/lib/prisma.service';
 export class UsersService {
   constructor(private prisma: PrismaService) { }
   async create(createUserDto: CreateUserDto) {
+    const checkEmail = await this.findByEmail(createUserDto.email);
+    if (checkEmail) {
+      throw new Error('Email already exists');
+    }
+
     return await this.prisma.users.create({ data: createUserDto });
   }
 
@@ -22,8 +27,20 @@ export class UsersService {
     return await this.prisma.users.findUnique({ where: { email } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.prisma.users.update({
+      where: { id },
+      data: updateUserDto,
+    });
+  }
+
+  async updatePfp(image: string, id: number) {
+    return await this.prisma.users.update({
+      where: { id },
+      data: {
+        image
+      }
+    })
   }
 
   remove(id: number) {

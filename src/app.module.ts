@@ -21,13 +21,17 @@ export class AppModule implements NestModule {
       },
       {
         path: '/users',
-        method: RequestMethod.POST,
+        method: RequestMethod.POST && RequestMethod.PATCH,
+      },
+      {
+        path: '/users/pfp',
+        method: RequestMethod.PATCH
       },
       '/auth/me',
       {
         path: '/donation/:fundId',
         method: RequestMethod.POST
-      }
+      },
     );
   }
 }

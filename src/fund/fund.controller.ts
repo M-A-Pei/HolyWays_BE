@@ -13,13 +13,11 @@ export class FundController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  async create(@Body() createFundDto: CreateFundDto, @Res() res: Response, @UploadedFile() image: Express.Multer.File,) {
+  async create(@Body() createFundDto: CreateFundDto, @Res() res: Response, @UploadedFile() image: Express.Multer.File) {
     const uploadedImg = await this.cloudinaryService.uploadImage(image);
 
     createFundDto.goal = Number(createFundDto.goal);
     createFundDto.image = uploadedImg
-
-    console.log(createFundDto)
     res.json(this.fundService.create(createFundDto, res.locals.user.id));
   }
 

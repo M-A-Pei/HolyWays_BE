@@ -3,11 +3,12 @@ import { PrismaService } from 'src/lib/prisma.service';
 
 @Injectable()
 export class DonationService {
+  cloudinaryService: any;
   constructor(private readonly prisma: PrismaService) { }
   async create(amount: number, image: string, userId: number, fundId: number) {
     return await this.prisma.donations.create({
       data: {
-        amount,
+        amount: Number(amount),
         image,
         donator: {
           connect: {

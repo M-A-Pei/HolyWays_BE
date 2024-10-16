@@ -1,13 +1,18 @@
-import { Controller, Get, Post, Body, Param, Delete, Res, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Res, Patch, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { DonationService } from './donation.service';
 import { Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from 'src/lib/cloudinary.service';
 
 @Controller('donation')
 export class DonationController {
-  constructor(private readonly donationService: DonationService) { }
+  constructor(private readonly donationService: DonationService, private readonly cloudinaryService: CloudinaryService) { }
 
   @Post("/:fundId")
-  async create(@Body() body: { amount: number, image: string }, @Res() res: Response, @Param() param: any) {
+  @UseInterceptors(FileInterceptor('image'))
+  async create(@Body() body: { amount: number, image: string }, @Res() res: Response, @Param() param: any, @UploadedFile() image: Express.Multer.File) {
+    const uploadedImg = await this.cloudinaryService.uploadImage(image);
+    body.image = uploadedImg
     const userId = res.locals.user.id;
     const fundId = Number(param.fundId);
     res.json(await this.donationService.create(body.amount, body.image, userId, fundId))

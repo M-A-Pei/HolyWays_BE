@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { LoginDto } from 'src/dto/login.dto';
+import { LoginDto } from 'src/auth/dto/login.dto';
 import { UsersService } from 'src/users/users.service';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt'
@@ -21,7 +21,7 @@ export class AuthService {
         }
 
         const token = jwt.sign(checkIfUserExists, process.env.SECRET || "secret", {
-            expiresIn: "1h",
+            expiresIn: "1d",
         });
 
         return token

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { LoginDto } from 'src/dto/login.dto';
+import { LoginDto } from 'src/auth/dto/login.dto';
 import { Response, Request } from 'express';
 import * as bcrypt from 'bcrypt'
 
@@ -28,7 +28,7 @@ export class AuthController {
 
       return this.authService.login({ email: createUserDto.email, password: originalPW })
     } catch (error) {
-      return error
+      return error.message
     }
 
   }
@@ -41,7 +41,8 @@ export class AuthController {
         token: req.headers.authorization,
         name: user.name,
         email: user.email,
-        phone: user.phone
+        phone: user.phone,
+        image: user.image
       })
     } catch (error) {
       console.log(error)
