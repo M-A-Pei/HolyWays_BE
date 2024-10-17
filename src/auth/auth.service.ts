@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { LoginDto } from 'auth/dto/login.dto';
-import { UsersService } from 'users/users.service';
+import { LoginDto } from './dto/login.dto';
+import { UsersService } from '../users/users.service';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt'
 
