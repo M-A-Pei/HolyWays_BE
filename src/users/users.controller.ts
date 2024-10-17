@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from 'src/lib/cloudinary.service';
+import { CloudinaryService } from 'lib/cloudinary.service';
 
 @Controller('users')
 export class UsersController {
