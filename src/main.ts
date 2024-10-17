@@ -1,17 +1,26 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import express from 'express';
-import './cloudinary.config';
+import { Handler } from 'aws-lambda'; // For Vercel's Serverless Functions
+import serverlessExpress from '@vendia/serverless-express'; // To wrap Express in Lambda format
+import "./cloudinary.config"
 
-async function bootstrap() {
-  const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+async function bootstrap(): Promise<Handler> {
+  const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
-  await app.init();  // Initializes the NestJS app but doesn't start listening
+  app.enableCors(); // Enable CORS for cross-origin requests
 
-  return server;  // Return the Express server instance
+  await app.init(); // Initialize the NestJS app without listening
+
+  const expressApp = app.getHttpAdapter().getInstance(); // Get the underlying Express app
+
+  return serverlessExpress({ app: expressApp }); // Return the serverless handler
 }
 
-export const handler = bootstrap();
+let cachedServer: Handler;
+
+export const handler: Handler = async (event, context, callback) => {
+  if (!cachedServer) {
+    cachedServer = await bootstrap(); // Cache the server handler for future invocations
+  }
+  return cachedServer(event, context, callback);
+};
