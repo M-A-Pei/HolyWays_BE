@@ -1,24 +1,24 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Handler, Context, APIGatewayEvent } from 'aws-lambda';
 import serverlessExpress from '@vendia/serverless-express';
-import './cloudinary.config'; // Import the Cloudinary configuration
+import { Handler, Context, APIGatewayEvent } from 'aws-lambda';
+import './cloudinary.config'; // Assuming you need Cloudinary config
 
-let cachedServer: Handler;
+let server: Handler;
 
-async function bootstrap() {
+async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  await app.init();
+  app.enableCors(); // Enable CORS for cross-origin requests
+  await app.init(); // Initialize the NestJS app
 
   const expressApp = app.getHttpAdapter().getInstance();
-  cachedServer = serverlessExpress({ app: expressApp });
+  return serverlessExpress({ app: expressApp });
 }
 
 export const handler: Handler = async (event: APIGatewayEvent, context: Context) => {
-  if (!cachedServer) {
-    await bootstrap(); // Initialize the server if it hasn't been cached
+  if (!server) {
+    server = await bootstrap(); // Cache the server for re-use
   }
-  return cachedServer(event, context, () => { });
+  return server(event, context, () => { }); // Invoke the cached server
 };
