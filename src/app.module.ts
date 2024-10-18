@@ -16,20 +16,24 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(authorization).forRoutes(
       {
-        path: '/fund',
+        path: '/api/fund',
         method: RequestMethod.POST,
       },
       {
-        path: '/users',
-        method: RequestMethod.POST && RequestMethod.PATCH,
+        path: '/api/users',
+        method: RequestMethod.POST,
       },
       {
-        path: '/users/pfp',
+        path: '/api/users',
+        method: RequestMethod.PATCH,
+      },
+      {
+        path: '/api/users/pfp',
         method: RequestMethod.PATCH
       },
-      '/auth/me',
+      '/api/auth/me',
       {
-        path: '/donation/:fundId',
+        path: '/api/donation/:fundId',
         method: RequestMethod.POST
       },
     );

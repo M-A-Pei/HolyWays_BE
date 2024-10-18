@@ -20,5 +20,6 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context)
   if (!server) {
     server = await bootstrap();
   }
+  // console.log("yoooooooooooooooooooooooooooooooooooooooo")
   return server(event, context, () => { });
 };
