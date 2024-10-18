@@ -18,7 +18,7 @@ async function bootstrap(): Promise<Handler> {
 
 export const handler: Handler = async (event: APIGatewayEvent, context: Context) => {
   if (!server) {
-    server = await bootstrap(); // Cache the server for re-use
+    server = await bootstrap();
   }
-  return server(event, context, () => { }); // Invoke the cached server
+  return server(event, context, () => { });
 };
