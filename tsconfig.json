@@ -1,20 +1,27 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
+    "module": "commonjs", // Vercel supports this module system
+    "declaration": true, 
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ES2021", // Modern target for serverless environments
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist", // Keep build output in dist/
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*"]  // Keep the same path resolution as in your "src" directory
+    },
     "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
+    "skipLibCheck": true, // Skips checking library files for faster build
+    "strictNullChecks": false, 
+    "noImplicitAny": false, 
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true, // Add this for Vercel's Node environment
+    "resolveJsonModule": true // In case you import JSON files
+  },
+  "exclude": ["node_modules", "dist"] // Ensure node_modules and build output are excluded
 }

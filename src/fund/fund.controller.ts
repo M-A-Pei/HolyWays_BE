@@ -3,8 +3,6 @@ import { FundService } from './fund.service';
 import { CreateFundDto } from './dto/create-fund.dto';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { v2 as cloudinary } from 'cloudinary'; // Import Cloudinary
-import { Readable } from 'stream';
 import { CloudinaryService } from '../lib/cloudinary.service';
 
 @Controller('fund')
