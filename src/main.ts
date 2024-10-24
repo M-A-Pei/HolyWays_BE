@@ -4,7 +4,7 @@ import './cloudinary.config'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  console.log("database url: ", process.env.DATABASE_URL)
   app.enableCors();
   await app.listen(3000);
 }
