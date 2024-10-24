@@ -8,7 +8,6 @@
   "scripts": {
     "postinstall": "echo DATABASE_URL: $DATABASE_URL && prisma generate",
     "build": "nest build",
-    "install": "npm install --omit=dev",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest build && nest start",
     "start:dev": "nest start --watch",
