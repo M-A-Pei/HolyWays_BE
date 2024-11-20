@@ -20,8 +20,8 @@ export class FundController {
   }
 
   @Get()
-  findAll() {
-    return this.fundService.findAll();
+  async findAll() {
+    return await this.fundService.findAll();
   }
 
   @Get('/byUserEmail/:email')
